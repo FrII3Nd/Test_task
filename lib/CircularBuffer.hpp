@@ -1,7 +1,6 @@
 #pragma once
 #include <iostream>
 
-class Iterator;
 template<typename T, std::size_t N>
 class CircularBuffer {
 private:
@@ -69,9 +68,11 @@ public:
             }
         }
         else
-            std::cout << "Buffer is empty" << "\n"; //throw (todo)
+            std::cout << "Buffer is empty" << "\n";
     }
-
+    int size(){
+        return counter;
+    }
     void printBuffer() {
         T* current = head;
         if (counter == 0) {
