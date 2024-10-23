@@ -1,6 +1,6 @@
 #pragma once
+
 #include <iostream>
-#include <stdexcept>
 
 template<typename T, std::size_t N>
 class CircularBuffer {
@@ -22,7 +22,7 @@ public:
 	{
 		delete[] arr;
 	}
-	void put(T value) noexcept
+	void put(T value) noexcept // write data to the buffer
 	{
 		*tail = value;
 		if (tail == head && counter != 0) {
@@ -34,13 +34,12 @@ public:
 		if (tail != &arr[bufferSize - 1]) {
 			tail++;
 		}
-		else {
+		else
 			tail = arr;
-		}
 		if (counter < bufferSize)
 			counter++;
 	}
-	T get()
+	T get() // read data from the buffer (older element)
 	{
 		if (counter != 0) {
 			if (head == &arr[bufferSize - 1]) {
@@ -58,7 +57,7 @@ public:
 		else
 			throw "Buffer is empty";
 	}
-	void remove() noexcept
+	void remove() noexcept //Delete data from the buffer (older element)
 	{
 		if (counter != 0) {
 			if (head == &arr[bufferSize - 1]) {
@@ -73,11 +72,11 @@ public:
 		else
 			std::cout << "Buffer is empty" << "\n";
 	}
-	int size() noexcept
+	int size() noexcept // return the number of buffer elements
 	{
 		return counter;
 	}
-	void printBuffer() noexcept
+	void printBuffer() noexcept // outputs the entire buffer to console
 	{
 		T* current = head;
 		if (counter == 0) {
