@@ -4,7 +4,7 @@
 
 template<typename T, std::size_t N>
 class CircularBuffer {
-private:
+public:
 	int bufferSize;
 	T* tail;
 	T* head;
@@ -13,6 +13,7 @@ private:
 public:
 	CircularBuffer() noexcept
 	{
+		typedef Iterator <T> itr;
 		bufferSize = N;
 		tail = head = arr;
 	}
@@ -58,4 +59,21 @@ public:
 	{
 		return bufferSize;
 	}
+	class Iterator
+	{
+		friend class CircularBuffer;
+		private:
+			T* begin; 
+			T* end; 
+			T* current;
+		public:
+			Iterator() {
+				begin = CircularBuffer::head;
+				end = CircularBuffer::tail;
+				current = CircularBuffer::head;
+			}
+			T testfnc() {
+				return *current;
+			}
+	};
 };
