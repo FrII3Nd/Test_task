@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.20)
-project(Test)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -14,12 +13,11 @@ include_directories(../src)
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-enable_testing()
 
 add_executable(
   Test
-  test_buffer.cpp
-  ../src/CircularBuffer.hpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/test_buffer.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/../src/CircularBuffer.hpp
 )
 target_link_libraries(
   Test
