@@ -2,22 +2,26 @@
 
 #include <cstddef>
 
+
+template<typename T, std::size_t N>
+class Iterator;
 template<typename T, std::size_t N>
 class CircularBuffer {
-public:
+	friend class Iterator<T, N>;
+private:
 	int bufferSize;
 	T* tail;
 	T* head;
 	int counter = 0;
 	T arr[N];
 public:
-	CircularBuffer() noexcept
+	CircularBuffer()
 	{
-		typedef Iterator <T> itr;
+		//typedef Iterator <T> itr;
 		bufferSize = N;
 		tail = head = arr;
 	}
-	void put(T value) noexcept // write data to the buffer
+	void push(T value) noexcept // write data to the buffer
 	{
 		*tail = value;
 		if (tail == head && counter != 0) {
@@ -34,7 +38,7 @@ public:
 		if (counter < bufferSize)
 			counter++;
 	}
-	T get() // read data from the buffer (older element)
+	T pop() noexcept// read data from the buffer (older element)
 	{
 		return *head;
 	}
@@ -59,21 +63,59 @@ public:
 	{
 		return bufferSize;
 	}
-	class Iterator
-	{
-		friend class CircularBuffer;
-		private:
-			T* begin; 
-			T* end; 
-			T* current;
-		public:
-			Iterator() {
-				begin = CircularBuffer::head;
-				end = CircularBuffer::tail;
-				current = CircularBuffer::head;
-			}
-			T testfnc() {
-				return *current;
-			}
-	};
+};
+template<typename T,std::size_t N>
+class Iterator
+{
+private:
+	T* begin;
+	T* end;
+	T* current;
+	T* buffer;
+
+public:
+	Iterator(CircularBuffer<T, N>& buf) {
+		begin = buf.head;
+		end = buf.tail;
+		current = buf.head;
+		buffer = buf.arr;
+	}
+	~Iterator() = default;
+	T& operator*() {
+		return *current;
+	}
+	T& operator++() noexcept {
+		if (current != buffer + (N - 1))
+			current++;
+		else
+			current = buffer;
+		return *current;
+	}
+	T& operator--() noexcept {
+		if (current != buffer)
+			current--;
+		else
+			current = buffer;
+		return *current;
+	}
+	T Begin() noexcept {
+		current = begin;
+		return *current;
+	}
+	T End() noexcept {
+		if (end != buffer)
+			current = end - 1;
+		else
+			current = buffer + (N - 1);
+		return *current;
+	}
+	T* getBegin() noexcept {
+		return begin;
+	}
+	T* getEnd() noexcept {
+		return end;
+	}
+	T* getCurrent() noexcept {
+		return current;
+	}
 };

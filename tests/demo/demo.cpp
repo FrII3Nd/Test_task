@@ -2,15 +2,27 @@
 #include <iostream>
 
 int main() {
-    CircularBuffer<int, 4> test;
-    CircularBuffer<int,4> ::Iterator it;
-   /* test.put(1);
-    test.put(2);
-    test.put(3);
-    std::cout << test.get() << "\n";
-    std::cout << test.size() << "\n";
-    std::cout << test.max_size() << "\n";*/
-    std::cout <<it.testfnc() << "\n";
+    CircularBuffer<int, 5> test;
+    test.push(1);
+    test.push(2);
+    test.push(3);
+    test.push(2);
+    test.push(99);
+    Iterator<int, 5> it(test);
+    std::cout <<*it << "\n";
+    std::cout << ++it << "\n";
+    std::cout << ++it << "\n";
+    std::cout << ++it << "\n";
+    std::cout << ++it << "\n\n";
+    it.Begin();
+    while (true) {
+        std::cout << *it << " ";
+        ++it;
+        if (it.getCurrent() == it.getEnd())
+            break;
+    }
+    std::cout << "\n";
+    std::cout << it.End() << "\n";
     system("pause");
     return 0;
 }
