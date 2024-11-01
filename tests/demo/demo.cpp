@@ -6,14 +6,14 @@ int main() {
     test.push(1);
     test.push(2);
     test.push(3);
-    test.push(2);
-    test.push(99);
+    test.push(4);
+    test.push(5);
     Iterator<int, 5> it(test);
-    std::cout <<*it << "\n";
+    std::cout <<*it << " ";
+    std::cout << ++it << " ";
+    std::cout << ++it << " ";
+    std::cout << ++it << " ";
     std::cout << ++it << "\n";
-    std::cout << ++it << "\n";
-    std::cout << ++it << "\n";
-    std::cout << ++it << "\n\n";
     it.Begin();
     while (true) {
         std::cout << *it << " ";
@@ -22,9 +22,8 @@ int main() {
             break;
     }
     std::cout << "\n";
-    std::cout << it.End() << "\n";
     it.Begin();
-    it += 4;
+    it += 3;
     std::cout<<*it<<"\n";
     it -= 2;
     std::cout << *it << "\n";
