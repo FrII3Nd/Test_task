@@ -85,4 +85,7 @@ TEST(RingBufferTest, Iterator) {
 	EXPECT_EQ(--it, 1);
 	EXPECT_EQ(it.Begin(), 1);
 	EXPECT_EQ(it.End(), 5);
+	it.Begin();
+	EXPECT_EQ(it += 4, 5);
+	EXPECT_EQ(it -= 3, 2);
 }

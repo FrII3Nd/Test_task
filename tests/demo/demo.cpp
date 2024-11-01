@@ -23,6 +23,11 @@ int main() {
     }
     std::cout << "\n";
     std::cout << it.End() << "\n";
+    it.Begin();
+    it += 4;
+    std::cout<<*it<<"\n";
+    it -= 2;
+    std::cout << *it << "\n";
     system("pause");
     return 0;
 }

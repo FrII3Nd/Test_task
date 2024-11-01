@@ -98,6 +98,14 @@ public:
 			current = buffer;
 		return *current;
 	}
+	T& operator +=(int n) {
+		current += n;
+		return *current;
+	}
+	T& operator -=(int n) {
+		current -= n;
+		return *current;
+	}
 	T Begin() noexcept {
 		current = begin;
 		return *current;
