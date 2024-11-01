@@ -10,13 +10,16 @@ bld/
 [Bb]in/
 [Oo]bj/
 [Ll]og/
+Testing/
+CMakeFiles/
+_deps/
+tests/
 
 
 #conan
 *.json
 *.cmake
 *.bat
-*.py
 
 #visual studio
 /out
