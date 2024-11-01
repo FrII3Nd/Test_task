@@ -24,3 +24,6 @@ tests/
 #visual studio
 /out
 /.vs
+
+#clion
+cmake-build-debug/
