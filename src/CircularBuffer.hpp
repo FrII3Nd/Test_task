@@ -17,7 +17,6 @@ private:
 public:
 	CircularBuffer()
 	{
-		//typedef Iterator <T> itr;
 		bufferSize = N;
 		tail = head = arr;
 	}
@@ -98,11 +97,11 @@ public:
 			current = buffer;
 		return *current;
 	}
-	T& operator +=(int n) {
+	T& operator +=(int n) noexcept{
 		current += n;
 		return *current;
 	}
-	T& operator -=(int n) {
+	T& operator -=(int n) noexcept{
 		current -= n;
 		return *current;
 	}
