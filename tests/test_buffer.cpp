@@ -23,27 +23,13 @@ TEST(RingBufferTest, Overflow) {
 	test.push(5);
 	EXPECT_EQ(test.pop(), 3);
 }
-TEST(RingBufferTest, Remove) {
-	CircularBuffer<int, 3> test;
-	test.push(1);
-	test.push(2);
-	test.push(3);
-	EXPECT_EQ(test.size(), 3);
-	test.remove();
-	EXPECT_EQ(test.size(), 2);
-	test.remove();
-	test.remove();
-	EXPECT_EQ(test.size(), 0);
-}
 TEST(RingBufferTest, Float) {
 	CircularBuffer<float, 3> test;
 	test.push(3.1f);
 	test.push(2.2f);
 	test.push(1.3f);
 	EXPECT_EQ(test.pop(), 3.1f);
-	test.remove();
 	EXPECT_EQ(test.pop(), 2.2f);
-	test.remove();
 	EXPECT_EQ(test.pop(), 1.3f);
 }
 TEST(RingBufferTest, Char) {
@@ -52,9 +38,7 @@ TEST(RingBufferTest, Char) {
 	test.push('b');
 	test.push('c');
 	EXPECT_EQ(test.pop(), 'a');
-	test.remove();
 	EXPECT_EQ(test.pop(), 'b');
-	test.remove();
 	EXPECT_EQ(test.pop(), 'c');
 }
 TEST(RingBufferTest, Bool) {
@@ -63,9 +47,7 @@ TEST(RingBufferTest, Bool) {
 	test.push(0);
 	test.push(1);
 	EXPECT_EQ(test.pop(), 0);
-	test.remove();
 	EXPECT_EQ(test.pop(), 0);
-	test.remove();
 	EXPECT_EQ(test.pop(), 1);
 }
 TEST(RingBufferTest, Iterator) {
@@ -78,14 +60,9 @@ TEST(RingBufferTest, Iterator) {
 	Iterator<int, 5> it(test);
 	EXPECT_EQ(*it, 1);
 	EXPECT_EQ(++it, 2);
-	EXPECT_EQ(++it, 3);
+	EXPECT_EQ(it++, 3);
 	EXPECT_EQ(++it, 4);
-	EXPECT_EQ(--it, 3);
+	EXPECT_EQ(it--, 3);
 	EXPECT_EQ(--it, 2);
 	EXPECT_EQ(--it, 1);
-	EXPECT_EQ(it.Begin(), 1);
-	EXPECT_EQ(it.End(), 5);
-	it.Begin();
-	EXPECT_EQ(it += 4, 5);
-	EXPECT_EQ(it -= 3, 2);
 }

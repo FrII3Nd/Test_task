@@ -9,49 +9,57 @@ template<typename T, std::size_t N>
 class CircularBuffer {
 	friend class Iterator<T, N>;
 private:
-	int bufferSize;
-	T* tail;
-	T* head;
+    T arr[N];
+	const int bufferSize = N;
+	T* tail = arr;
+	T* head = arr;
 	int counter = 0;
-	T arr[N];
 public:
-	CircularBuffer()
-	{
-		bufferSize = N;
-		tail = head = arr;
-	}
+	CircularBuffer() = default;
 	void push(T value) noexcept // write data to the buffer
 	{
 		*tail = value;
-		if (tail == head && counter != 0) {
+		if (tail == head && counter != 0)
+        {
 			if (head != &arr[bufferSize - 1])
+            {
 				head++;
+            }
 			else
+            {
 				head = arr;
+            }
 		}
-		if (tail != &arr[bufferSize - 1]) {
+		if (tail != &arr[bufferSize - 1])
+        {
 			tail++;
 		}
 		else
-			tail = arr;
+        {
+            tail = arr;
+        }
 		if (counter < bufferSize)
+        {
 			counter++;
+        }
 	}
-	T pop() noexcept// read data from the buffer (older element)
+
+	void pop() noexcept //Delete data from the buffer (older element)
 	{
-		return *head;
-	}
-	void remove() noexcept //Delete data from the buffer (older element)
-	{
-		if (counter != 0) {
-			if (head == &arr[bufferSize - 1]) {
+		if (counter != 0)
+        {
+            T output = *head;
+			if (head == &arr[bufferSize - 1])
+            {
 				head = arr;
 				counter--;
 			}
-			else {
+			else
+            {
 				head++;
 				counter--;
 			}
+            return output;
 		}
 	}
 	int size() noexcept // return the number of buffer elements
@@ -73,56 +81,93 @@ private:
 	T* buffer;
 
 public:
-	Iterator(CircularBuffer<T, N>& buf) {
+	Iterator(CircularBuffer<T, N>& buf)
+    {
 		begin = buf.head;
 		end = buf.tail;
 		current = buf.head;
 		buffer = buf.arr;
 	}
 	~Iterator() = default;
-	T& operator*() {
+	T& operator*()
+    {
 		return *current;
 	}
-	T& operator++() noexcept {
+	T& operator++() noexcept
+    {
 		if (current != buffer + (N - 1))
+        {
 			current++;
+        }
 		else
+        {
 			current = buffer;
+        }
 		return *current;
 	}
-	T& operator--() noexcept {
+    T& operator++(int) noexcept
+    {
+        if (current != buffer + (N - 1))
+        {
+            current++;
+        }
+        else
+        {
+            current = buffer;
+        }
+        return *current;
+    }
+	T& operator--() noexcept
+    {
 		if (current != buffer)
+        {
 			current--;
+        }
 		else
+        {
 			current = buffer;
+        }
 		return *current;
 	}
-	T& operator +=(int n) noexcept{
-		current += n;
-		return *current;
-	}
-	T& operator -=(int n) noexcept{
-		current -= n;
-		return *current;
-	}
-	T Begin() noexcept {
+    T& operator--(int) noexcept
+    {
+        if (current != buffer)
+        {
+            current--;
+        }
+        else
+        {
+            current = buffer;
+        }
+        return *current;
+    }
+	T Begin() noexcept
+    {
 		current = begin;
 		return *current;
 	}
-	T End() noexcept {
+	T End() noexcept
+    {
 		if (end != buffer)
+        {
 			current = end - 1;
+        }
 		else
+        {
 			current = buffer + (N - 1);
+        }
 		return *current;
 	}
-	T* getBegin() noexcept {
+	T* getBegin() noexcept
+    {
 		return begin;
 	}
-	T* getEnd() noexcept {
+	T* getEnd() noexcept
+    {
 		return end;
 	}
-	T* getCurrent() noexcept {
+	T* getCurrent() noexcept
+    {
 		return current;
 	}
 };
