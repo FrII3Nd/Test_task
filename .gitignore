@@ -14,6 +14,7 @@ Testing/
 CMakeFiles/
 _deps/
 tests/
+.idea/
 
 
 #conan
