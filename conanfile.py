@@ -26,6 +26,6 @@ class MyProjectConan(ConanFile):
     def build(self):
         cmake = CMake(self)
         cmake.configure()
-       # cmake.build()
+        cmake.build()
         if not self.conf.get("tools.build:skip_test", default=False):
             cmake.test()
