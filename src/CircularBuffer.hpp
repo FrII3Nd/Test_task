@@ -67,16 +67,16 @@ public:
 	{
 		return counter;
 	}
-	int max_size() noexcept
+	int max_size() noexcept // return the number of maximum buffer elements
 	{
 		return bufferSize;
 	}
-    Iterator begin() noexcept
+    Iterator begin() noexcept //return pointers for iterator
     {
         it_cnf.cur = head;
         return it_cnf;
     }
-    Iterator end() noexcept
+    Iterator end() noexcept //return pointers for iterator
     {
         if (tail != arr)
         {
@@ -120,7 +120,7 @@ public:
         {
             return current != it.current;
         }
-        T& operator*()
+        T& operator*() noexcept
         {
             return *current;
         }

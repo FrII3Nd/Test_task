@@ -3,6 +3,7 @@
 
 int main() {
     CircularBuffer<int, 5> demo;
+    std::cout<<"\nPush: 0 1 2 3 4 5\n";
     demo.push(0);
     demo.push(1);
     demo.push(2);
