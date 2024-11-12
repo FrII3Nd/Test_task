@@ -28,3 +28,4 @@ tests/
 
 #clion
 cmake-build-debug/
+/.idea
