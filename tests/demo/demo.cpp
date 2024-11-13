@@ -1,7 +1,8 @@
 #include "CircularBuffer.hpp"
 #include <iostream>
 
-int main() {
+int main()
+{
     CircularBuffer<int, 5> demo;
     std::cout<<"\nPush: 0 1 2 3 4 5\n";
     demo.push(0);
@@ -14,7 +15,7 @@ int main() {
     auto it1 = demo.begin();
     auto it2 = demo.end();
     std::cout<<"\nBegin-->End: ";
-    for (it1; it1 != it2; it1++)
+    for (; it1 != it2; it1++)
     {
         std::cout<<"\t"<<*it1;
     }
@@ -22,7 +23,7 @@ int main() {
     auto it3 = demo.begin();
     auto it4 = demo.end();
     std::cout<<"\nEnd-->Begin: ";
-    for (it4; it4 != it3; it4--)
+    for (; it4 != it3; it4--)
     {
         std::cout<<"\t"<<*it4;
     }

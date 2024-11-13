@@ -3,174 +3,174 @@
 #include <cstddef>
 
 template<typename T, std::size_t N>
-class CircularBuffer {
-private:
-    T arr[N];
-	const int bufferSize = N;
-	T* tail = arr;
-	T* head = arr;
-	int counter = 0;
-    struct Iterator_conf
-    {
-        T* cur;
-        T* arr_start;
-        T* arr_end;
-    };
-    Iterator_conf it_cnf{head,arr,arr + N - 1};
-public:
-    class Iterator;
-	CircularBuffer() = default;
-	void push(T value) noexcept // write data to the buffer
-	{
-		*tail = value;
-		if (tail == head && counter != 0)
-        {
-			if (head != &arr[bufferSize - 1])
-            {
-				head++;
-            }
-			else
-            {
-				head = arr;
-            }
-		}
-		if (tail != &arr[bufferSize - 1])
-        {
-			tail++;
-		}
-		else
-        {
-            tail = arr;
-        }
-		if (counter < bufferSize)
-        {
-			counter++;
-        }
-	}
-
-	T pop() noexcept //Delete data from the buffer (older element)
-	{
-        T output = *head;
-        if (head == &arr[bufferSize - 1])
-        {
-            head = arr;
-            counter--;
-        }
-        else
-        {
-            head++;
-            counter--;
-        }
-        return output;
-	}
-	int size() noexcept // return the number of buffer elements
-	{
-		return counter;
-	}
-	int max_size() noexcept // return the number of maximum buffer elements
-	{
-		return bufferSize;
-	}
-    Iterator begin() noexcept //return pointers for iterator
-    {
-        it_cnf.cur = head;
-        return it_cnf;
-    }
-    Iterator end() noexcept //return pointers for iterator
-    {
-        if (tail != arr)
-        {
-            it_cnf.cur = tail - 1;
-        }
-        else
-        {
-            it_cnf.cur = arr + N - 1;
-        }
-        return it_cnf;
-    }
-    class Iterator
-    {
+class CircularBuffer
+{
     private:
-        T* current;
-        T* begin;
-        T* end;
+        T arr[N];
+        const int bufferSize = N;
+        T* tail = arr;
+        T* head = arr;
+        int counter = 0;
+        struct Iterator_conf
+        {
+            T* cur;
+            T* arr_start;
+            T* arr_end;
+        };
+        Iterator_conf it_cnf {head,arr,arr + N - 1};
     public:
-        Iterator(Iterator_conf& it) noexcept
+        class Iterator;
+        CircularBuffer() = default;
+        void push(T value) noexcept // write data to the buffer
         {
-            current = it.cur;
-            begin = it.arr_start;
-            end = it.arr_end;
-        }
-        ~Iterator() = default;
-        T& operator=(T* ptr) noexcept
-        {
-            current = ptr;
-            return current;
-        }
-        T& operator=(Iterator_conf& it) noexcept
-        {
-            current = it.cur;
-            return current;
-        }
-        bool operator==(const Iterator& it) noexcept
-        {
-            return current == it.current;
-        }
-        bool operator!=(const Iterator& it) noexcept
-        {
-            return current != it.current;
-        }
-        T& operator*() noexcept
-        {
-            return *current;
-        }
-        T& operator++() noexcept
-        {
-            if (current != end)
+            *tail = value;
+            if (tail == head && counter != 0)
             {
-                current++;
+                if (head != &arr[bufferSize - 1])
+                {
+                    head++;
+                }
+                else
+                {
+                    head = arr;
+                }
+            }
+            if (tail != &arr[bufferSize - 1])
+            {
+                tail++;
             }
             else
             {
-                current = begin;
+                tail = arr;
             }
-            return *current;
-        }
-        T& operator++(int) noexcept
-        {
-            if (current != end)
+            if (counter < bufferSize)
             {
-                current++;
+                counter++;
+            }
+        }
+        T pop() noexcept //Delete data from the buffer (older element)
+        {
+            T output = *head;
+            if (head == &arr[bufferSize - 1])
+            {
+                head = arr;
+                counter--;
             }
             else
             {
-                current = begin;
+                head++;
+                counter--;
             }
-            return *current;
+            return output;
         }
-        T& operator--() noexcept
+        int size() noexcept // return the number of buffer elements
         {
-            if (current != begin)
+            return counter;
+        }
+        int max_size() noexcept // return the number of maximum buffer elements
+        {
+            return bufferSize;
+        }
+        Iterator begin() noexcept //return pointers for iterator (fist element)
+        {
+            it_cnf.cur = head;
+            return it_cnf;
+        }
+        Iterator end() noexcept //return pointers for iterator (last element)
+        {
+            if (tail != arr)
             {
-                current--;
+                it_cnf.cur = tail - 1;
             }
             else
             {
-                current = end;
+                it_cnf.cur = arr + N - 1;
             }
-            return *current;
+            return it_cnf;
         }
-        T& operator--(int) noexcept
+        class Iterator
         {
-            if (current != begin)
+        private:
+            T* current;
+            T* begin;
+            T* end;
+        public:
+            Iterator(Iterator_conf& it) noexcept
             {
-                current--;
+                current = it.cur;
+                begin = it.arr_start;
+                end = it.arr_end;
             }
-            else
+            ~Iterator() = default;
+            T& operator=(T* ptr) noexcept
             {
-                current = end;
+                current = ptr;
+                return current;
             }
-            return *current;
+            T& operator=(Iterator_conf& it) noexcept
+            {
+                current = it.cur;
+                return current;
+            }
+            bool operator==(const Iterator& it) noexcept
+            {
+                return current == it.current;
+            }
+            bool operator!=(const Iterator& it) noexcept
+            {
+                return current != it.current;
+            }
+            T& operator*() noexcept
+            {
+                return *current;
+            }
+            T& operator++() noexcept
+            {
+                if (current != end)
+                {
+                    current++;
+                }
+                else
+                {
+                    current = begin;
+                }
+                return *current;
+            }
+            T& operator++(int) noexcept
+            {
+                if (current != end)
+                {
+                    current++;
+                }
+                else
+                {
+                    current = begin;
+                }
+                return *current;
+            }
+            T& operator--() noexcept
+            {
+                if (current != begin)
+                {
+                    current--;
+                }
+                else
+                {
+                    current = end;
+                }
+                return *current;
+            }
+            T& operator--(int) noexcept
+            {
+                if (current != begin)
+                {
+                    current--;
+                }
+                else
+                {
+                    current = end;
+                }
+                return *current;
         }
     };
 };
